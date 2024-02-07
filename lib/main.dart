@@ -23,6 +23,83 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+    
+
+    List<Widget> societyCards = []; //List of society cards
+
+    late TextEditingController controller;
+
+    @override
+    void initState(){
+        super.initState();
+        controller = TextEditingController();
+    }
+
+    @override
+    void dispose(){
+        controller.dispose();
+        super.dispose();
+    }
+
+    Widget createSocietyCard(name){
+        Navigator.of(context).pop();
+        controller.clear();
+        return Card(
+            margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget> [
+                      Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: Center(
+                          child: Text(
+                              '$name',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.grey
+                              ),
+                          ),
+                        ),
+                      ),
+              
+                      const SizedBox(
+                          height: 6,
+                      )
+                  ]
+              ),
+            ),
+        );
+    }
+
+
+
+    Future openTextInput() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+            title: const Text('Your Society Name'),
+            content: TextField(
+                autofocus: true,
+                decoration: const InputDecoration(
+                    hintText: 'Enter your society name'
+                ),
+                controller: controller,
+            ),
+            actions: [
+                TextButton(
+                    onPressed:() => {
+                        setState(() {
+                            societyCards.add(createSocietyCard(controller.text));
+                        })
+                    },
+                    child: const Text('SUBMIT'),
+                )
+            ],
+        )
+    );
+
     @override
     Widget build(BuildContext context) {
         return Scaffold(
@@ -41,22 +118,40 @@ class _HomeState extends State<Home> {
             ),
 
             body: Padding(
-                padding: EdgeInsets.fromLTRB(30, 40, 30, 0),
+                padding: const EdgeInsets.fromLTRB(30, 40, 30, 0),
                 child: Column(
                     children: <Widget> [
-                        Text(
-                            'YOUR SOCIETIES:',
-                            style: TextStyle(
-                                color: Colors.grey.shade300,
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                              child: Text(
+                                  'YOUR SOCIETIES:',
+                                  style: TextStyle(
+                                      color: Colors.grey.shade300,
+                                  ),
+                                  textAlign: TextAlign.left,
+                              ),
                             ),
+                          ],
                         ),
+                        const SizedBox(
+                            height: 6,
+                        ),
+
+                        //CREATE CARDS HERE WHEN BUTTON PRESSED
+                        //
+                        ...societyCards,
+
                     ],
                 ),
             ),
 
             floatingActionButton: FloatingActionButton(
                 backgroundColor: Colors.grey.shade300,
-                onPressed: () => (),
+                onPressed: () => {
+                    openTextInput()
+                },
                 child: const Text('+',
                     style: TextStyle(fontSize: 25.0),
                 ),
