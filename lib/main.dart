@@ -15,27 +15,52 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class Home extends StatefulWidget {
+    const Home({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(
-          title: const Text('This is a test app'),
-          centerTitle: true,
-          backgroundColor: Colors.blue.shade700,
-        ),
+  State<Home> createState() => _HomeState();
+}
 
-      body: Container(
-          color: Colors.amber,
-          padding: const EdgeInsets.all(20), 
-          margin: const EdgeInsets.all(20),
-          child: const Text("Some text"),
-        ),
-      floatingActionButton: FloatingActionButton(
-          child: const Text('button'),
-          onPressed: () => (),
-        ),
-      );
-  }
+class _HomeState extends State<Home> {
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+            backgroundColor: Colors.grey.shade900,
+            appBar: AppBar(
+                title: const Text(
+                    'Add a new society',
+                    style: TextStyle(
+                        color: Colors.white
+                        ),
+                    ),
+
+                    centerTitle: true,
+                    elevation: 0.0,
+                    backgroundColor: Colors.grey.shade700,
+            ),
+
+            body: Padding(
+                padding: EdgeInsets.fromLTRB(30, 40, 30, 0),
+                child: Column(
+                    children: <Widget> [
+                        Text(
+                            'YOUR SOCIETIES:',
+                            style: TextStyle(
+                                color: Colors.grey.shade300,
+                            ),
+                        ),
+                    ],
+                ),
+            ),
+
+            floatingActionButton: FloatingActionButton(
+                backgroundColor: Colors.grey.shade300,
+                onPressed: () => (),
+                child: const Text('+',
+                    style: TextStyle(fontSize: 25.0),
+                ),
+            ),
+        );
+    }
 }
