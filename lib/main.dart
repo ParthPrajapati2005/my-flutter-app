@@ -34,13 +34,38 @@ class _OpenPageState extends State<OpenPage> {
     @override
     Widget build(BuildContext context) {
         return Scaffold(
+            backgroundColor: Colors.grey.shade900,
             appBar: AppBar(
-                title: Text(widget.societyName),
+                title: Text(
+                    'Society : ${widget.societyName}',
+                    style: const TextStyle(
+                        color: Colors.white
+                    ),
+                ),
+                centerTitle:true,
+                backgroundColor: Colors.grey.shade700,
             ),
 
-            body: const Center(
-                child: Text('Some Text')
-            ),
+            body: Container(
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                        TextField(
+                            decoration: InputDecoration(
+                                filled: true,
+                                hintText: 'Chat here...',
+                                fillColor: Colors.grey.shade600,
+                                suffixIcon: IconButton(
+                                    icon: const Icon(Icons.send),
+                                    onPressed: (){},
+                                )
+                            ),
+                            cursorColor: Colors.white,
+                        )
+                    ],
+                ),
+            )
         );
     }
 }
@@ -129,8 +154,6 @@ class _HomeState extends State<Home> {
             ),
         );
     }
-
-
 
     Future openTextInput() => showDialog(
         context: context,
