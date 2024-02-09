@@ -1,7 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:test_app2/firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async{
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+    );
+    runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -52,23 +58,28 @@ class _HomeState extends State<Home> {
     List<Widget> societyCards = []; //List of society cards
 
     late TextEditingController controller;
+    late TextEditingController descriptionController;
 
     @override
     void initState(){
         super.initState();
         controller = TextEditingController();
+        descriptionController = TextEditingController();
     }
 
     @override
     void dispose(){
         controller.dispose();
+        descriptionController.dispose();
         super.dispose();
     }
 
-    Widget createSocietyCard(name){
+    Widget createSocietyCard(name, description){
         Navigator.of(context).pop();
         controller.clear();
+        descriptionController.clear();
         return Card(
+            color: Colors.grey,
             margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -77,17 +88,25 @@ class _HomeState extends State<Home> {
                 children: <Widget> [
                     Padding(
                     padding: const EdgeInsets.all(30.0),
-                    child: Center(
-                        
-                        child: Text(
-                            '$name',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey
+                    child: Column(
+                      children: [
+                        Center(
+                            child: Text(
+                                '$name',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black
+                                    ),
                                 ),
                             ),
-                        ),
+                        Center(
+                            child: Text(
+                                '$description'
+                            ) ,
+                        )
+                      ],
+                    ),
                     ),
 
                     ElevatedButton(
@@ -115,25 +134,40 @@ class _HomeState extends State<Home> {
 
     Future openTextInput() => showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-            title: const Text('Your Society Name'),
-            content: TextField(
-                autofocus: true,
-                decoration: const InputDecoration(
-                    hintText: 'Enter your society name'
+        builder: (context) => Center(
+          child: Wrap(
+            children: [AlertDialog(
+                title: const Text('Your Society Name'),
+                content: Column(
+                  children: [
+                    TextField(
+                        autofocus: true,
+                        decoration: const InputDecoration(
+                            hintText: 'Enter your society name'
+                        ),
+                        controller: controller,
+                    ),
+                    TextField(
+                        autofocus: true,
+                        decoration: const InputDecoration(
+                            hintText: 'Enter your description'
+                        ),
+                        controller: descriptionController,
+                    ),
+                  ],
                 ),
-                controller: controller,
-            ),
-            actions: [
-                TextButton(
-                    onPressed:() => {
-                        setState(() {
-                            societyCards.add(createSocietyCard(controller.text));
-                        })
-                    },
-                    child: const Text('SUBMIT'),
-                )
-            ],
+                actions: [
+                    TextButton(
+                        onPressed:() => {
+                            setState(() {
+                                societyCards.add(createSocietyCard(controller.text, descriptionController.text));
+                            })
+                        },
+                        child: const Text('SUBMIT'),
+                    )
+                ],
+            )],
+          ),
         )
     );
 
