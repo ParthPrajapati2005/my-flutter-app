@@ -15,6 +15,31 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
+class OpenPage extends StatefulWidget {
+    final String societyName;
+    const OpenPage(this.societyName, {super.key});
+
+    @override
+    State<OpenPage> createState() => _OpenPageState();
+}
+
+class _OpenPageState extends State<OpenPage> {
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+            appBar: AppBar(
+                title: Text(widget.societyName),
+            ),
+
+            body: const Center(
+                child: Text('Some Text')
+            ),
+        );
+    }
+}
+
+
 class Home extends StatefulWidget {
     const Home({super.key});
 
@@ -24,7 +49,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
     
-
     List<Widget> societyCards = []; //List of society cards
 
     late TextEditingController controller;
@@ -50,24 +74,37 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget> [
-                      Padding(
-                        padding: const EdgeInsets.all(30.0),
-                        child: Center(
-                          child: Text(
-                              '$name',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.grey
-                              ),
-                          ),
+                children: <Widget> [
+                    Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Center(
+                        
+                        child: Text(
+                            '$name',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 18,
+                                color: Colors.grey
+                                ),
+                            ),
                         ),
-                      ),
+                    ),
+
+                    ElevatedButton(
+                        onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OpenPage(name)
+                                )
+                            );
+                        },
+                        child: const Text('OPEN')
+                    ),
               
-                      const SizedBox(
-                          height: 6,
-                      )
+                    const SizedBox(
+                        height: 6,
+                    )
                   ]
               ),
             ),
@@ -138,9 +175,6 @@ class _HomeState extends State<Home> {
                         const SizedBox(
                             height: 6,
                         ),
-
-                        //CREATE CARDS HERE WHEN BUTTON PRESSED
-                        //
                         ...societyCards,
 
                     ],
