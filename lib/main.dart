@@ -37,9 +37,10 @@ class _OpenPageState extends State<OpenPage> {
             backgroundColor: Colors.grey.shade900,
             appBar: AppBar(
                 title: Text(
-                    'Society : ${widget.societyName}',
+                    widget.societyName,
                     style: const TextStyle(
-                        color: Colors.white
+                        color: Colors.white,
+                        fontFamily: 'ProtestStrike'
                     ),
                 ),
                 centerTitle:true,
@@ -52,10 +53,18 @@ class _OpenPageState extends State<OpenPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                         TextField(
+                            style: const TextStyle(
+                                fontFamily: 'ProtestStrike',
+                                fontSize: 18
+                            ),
                             decoration: InputDecoration(
                                 filled: true,
                                 hintText: 'Chat here...',
+                                hintStyle: const TextStyle(
+                                    fontFamily: 'ProtestStrike'
+                                ),
                                 fillColor: Colors.grey.shade600,
+                                
                                 suffixIcon: IconButton(
                                     icon: const Icon(Icons.send),
                                     onPressed: (){},
@@ -120,14 +129,21 @@ class _HomeState extends State<Home> {
                                 '$name',
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black
+                                    fontSize: 25,
+                                    color: Colors.black,
+                                    fontFamily: 'ProtestStrike'
                                     ),
                                 ),
                             ),
                         Center(
                             child: Text(
-                                '$description'
+                                '$description',
+                                style: TextStyle(
+                                    fontFamily: 'ProtestStrike',
+                                    color: Colors.grey.shade200
+                
+                                ),
+
                             ) ,
                         )
                       ],
@@ -143,7 +159,13 @@ class _HomeState extends State<Home> {
                                 )
                             );
                         },
-                        child: const Text('OPEN')
+                        child: const Text(
+                            'OPEN',
+                            style: TextStyle(
+                                fontFamily: 'ProtestStrike',
+                                fontSize: 15,
+                            ),
+                            )
                     ),
               
                     const SizedBox(
@@ -159,38 +181,41 @@ class _HomeState extends State<Home> {
         context: context,
         builder: (context) => Center(
           child: Wrap(
-            children: [AlertDialog(
-                title: const Text('Your Society Name'),
-                content: Column(
-                  children: [
-                    TextField(
-                        autofocus: true,
-                        decoration: const InputDecoration(
-                            hintText: 'Enter your society name'
+            children: [
+                    AlertDialog(
+                    title: const Text('Your Society Name'),
+                    content: Column(
+                    children: [
+                        TextField(
+                            autofocus: true,
+                            decoration: const InputDecoration(
+                                hintText: 'Enter your society name'
+                            ),
+                        
+                            controller: controller,
                         ),
-                        controller: controller,
-                    ),
-                    TextField(
-                        autofocus: true,
-                        decoration: const InputDecoration(
-                            hintText: 'Enter your description'
+                        TextField(
+                            autofocus: true,
+                            decoration: const InputDecoration(
+                                hintText: 'Enter your description'
+                            ),
+                            controller: descriptionController,
                         ),
-                        controller: descriptionController,
+                    ],
                     ),
-                  ],
-                ),
-                actions: [
-                    TextButton(
-                        onPressed:() => {
-                            setState(() {
-                                societyCards.add(createSocietyCard(controller.text, descriptionController.text));
-                            })
-                        },
-                        child: const Text('SUBMIT'),
+                    actions: [
+                        TextButton(
+                            onPressed:() => {
+                                setState(() {
+                                    societyCards.add(createSocietyCard(controller.text, descriptionController.text));
+                                })
+                            },
+                            child: const Text('SUBMIT'),
+                            )
+                        ],
                     )
                 ],
-            )],
-          ),
+            ),
         )
     );
 
@@ -202,7 +227,8 @@ class _HomeState extends State<Home> {
                 title: const Text(
                     'Add a new society',
                     style: TextStyle(
-                        color: Colors.white
+                        color: Colors.white,
+                        fontFamily: 'ProtestStrike'
                         ),
                     ),
 
